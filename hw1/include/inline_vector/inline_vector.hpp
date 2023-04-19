@@ -197,8 +197,7 @@ public:
         if (size_ == 0) {
             throw std::out_of_range("`InlineVector::pop_back()` vector is empty");
         }
-        --size_;
-        dyn_data.reserve(size_);
+        dyn_data.reserve(--size_);
         if (size_ == N) {
             dyn_to_sized();
             dyn_data.clear();

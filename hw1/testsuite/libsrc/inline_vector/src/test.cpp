@@ -282,6 +282,24 @@ TEST(InlinedVectorTest, PopBack) {
     }
 
     {
+        InlineVector<int, 4> vec = {1, 2, 3, 4};
+        InlineVector<int, 4> ideal_vec = {1, 2};
+
+        vec.pop_back();
+        vec.pop_back();
+
+        ASSERT_EQ(vec.size(), 2);
+        ASSERT_EQ(vec.capacity(), 4);
+        ASSERT_EQ(vec, ideal_vec);
+
+        vec.pop_back();
+        vec.pop_back();
+
+        ASSERT_TRUE(vec.empty());
+        ASSERT_THROW(vec.pop_back(), std::out_of_range);
+    }
+
+    {
         InlineVector<int, 4> vec = {1, 2, 3, 4, 5, 6, 7, 8};
         InlineVector<int, 4> ideal_vec_1 = {1, 2, 3, 4, 5, 6};
         InlineVector<int, 4> ideal_vec_2 = {1, 2};
@@ -410,6 +428,46 @@ TEST(InlinedVectorTest, Erase) {
         vec.clear();
         ASSERT_EQ(vec.size(), 0);
         ASSERT_EQ(vec.capacity(), 2);
+        ASSERT_TRUE(vec.empty());
+    }
+
+    {
+        InlineVector<int, 4> vec = {1, 2, 3, 4, 5, 6, 7, 8, 10};
+
+        vec.erase(vec.begin() + 1);
+        vec.erase(vec.begin());
+
+        ASSERT_EQ(vec.size(), 7);
+        ASSERT_EQ(vec.capacity(), 16);
+
+        vec.erase(vec.begin() + vec.size() - 4);
+        vec.erase(vec.begin() + vec.size() - 1);
+
+        ASSERT_EQ(vec.size(), 5);
+        ASSERT_EQ(vec.capacity(), 16);
+
+        ASSERT_EQ(vec[0], 3);
+        ASSERT_EQ(vec[1], 4);
+        ASSERT_EQ(vec[2], 5);
+        ASSERT_EQ(vec[3], 7);
+        ASSERT_EQ(vec[4], 8);
+
+        vec.erase(vec.begin() + 3);
+        vec.erase(vec.begin());
+
+        ASSERT_EQ(vec.size(), 3);
+        ASSERT_EQ(vec.capacity(), 4);
+
+        ASSERT_EQ(vec[0], 4);
+        ASSERT_EQ(vec[1], 5);
+        ASSERT_EQ(vec[2], 8);
+
+        vec.erase(vec.begin());
+        vec.erase(vec.begin());
+        vec.erase(vec.begin());
+
+        ASSERT_EQ(vec.size(), 0);
+        ASSERT_EQ(vec.capacity(), 4);
         ASSERT_TRUE(vec.empty());
     }
 }
