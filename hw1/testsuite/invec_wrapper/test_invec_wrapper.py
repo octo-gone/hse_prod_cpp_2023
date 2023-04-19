@@ -81,5 +81,33 @@ class InlineVectorWrapperTest(unittest.TestCase):
         self.read_vector([], True)
         self.read_remove(True)
 
+    def test_add_value_2(self):
+        self.add_value(1)
+        self.add_value(2)
+        self.add_value(3)
+        self.add_value(4)
+        self.add_value(5)
+        self.add_value(6)
+        self.add_value(7)
+        self.read_vector([1, 2, 3, 4, 5, 6, 7])
+
+    def test_remove_value_2(self):
+        self.test_add_value_2()
+        self.read_remove()
+        self.read_vector([1, 2, 3, 4, 5, 6])
+        self.read_stats(6, 8)
+        self.read_remove()
+        self.read_vector([1, 2, 3, 4, 5])
+        self.read_stats(5, 5)
+        self.read_remove()
+        self.read_vector([1, 2, 3, 4])
+        self.read_stats(4, 5)
+        self.read_remove()
+        self.read_remove()
+        self.read_remove()
+        self.read_remove()
+        self.read_vector([], True)
+        self.read_remove(True)
+
 if __name__ == '__main__':
     unittest.main()
