@@ -90,7 +90,7 @@ private:
     }
 
     void dyn_to_sized() {
-        std::copy(dyn_data.begin(), dyn_data.begin(), sized_data.begin());
+        std::copy(dyn_data.begin(), dyn_data.begin() + N, sized_data.begin());
     }
 
 public:
@@ -199,7 +199,7 @@ public:
         }
         --size_;
         dyn_data.reserve(size_);
-        if (size_ - 1 == N) {
+        if (size_ == N) {
             dyn_to_sized();
             dyn_data.clear();
         }
