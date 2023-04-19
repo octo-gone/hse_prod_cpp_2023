@@ -68,6 +68,8 @@ class InlineVectorWrapperTest(unittest.TestCase):
     def test_remove_value(self):
         self.test_add_value()
         self.read_remove()
+        self.read_stats(6, 8)
+        self.read_vector([1, -10, 22, 333333, 0, 1])
         self.read_remove()
         self.read_stats(5, 5)
         self.read_vector([1, -10, 22, 333333, 0])
